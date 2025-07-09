@@ -5,7 +5,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuSub,
@@ -29,7 +28,9 @@ import {
   Sun,
   Moon,
   Check,
+  ChevronRight,
 } from "lucide-react"
+import Link from "next/link"
 
 // Mock user data
 const currentUser = {
@@ -60,9 +61,8 @@ export function UserProfileDropdown() {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-80 font-mono" align="end" sideOffset={10}>
-        {/* User Info Header */}
-        <DropdownMenuLabel className="p-4 pb-3">
+      <DropdownMenuContent className="w-80 font-mono p-0" align="end" sideOffset={10}>
+        <div className="p-4">
           <div className="flex items-center gap-4">
             <Avatar className="h-12 w-12">
               <AvatarImage src={currentUser.avatar || "/placeholder.svg"} alt={currentUser.name} />
@@ -85,11 +85,7 @@ export function UserProfileDropdown() {
               </div>
             </div>
           </div>
-        </DropdownMenuLabel>
-
-        {/* User Stats */}
-        <div className="px-4 pb-3">
-          <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="grid grid-cols-2 gap-2 text-xs mt-4">
             <div className="bg-muted p-2 rounded">
               <div className="text-muted-foreground mb-0.5">Department</div>
               <div className="text-foreground font-semibold">{currentUser.department}</div>
@@ -103,11 +99,12 @@ export function UserProfileDropdown() {
 
         <DropdownMenuSeparator />
 
-        {/* Menu Items */}
         <div className="py-1">
-          <DropdownMenuItem className="cursor-pointer py-2.5 px-4">
-            <User className="mr-3 h-4 w-4" />
-            <span>Profile Settings</span>
+          <DropdownMenuItem asChild className="cursor-pointer py-2.5 px-4">
+            <Link href="/settings">
+              <User className="mr-3 h-4 w-4" />
+              <span>Profile Settings</span>
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem className="cursor-pointer py-2.5 px-4">
@@ -116,23 +113,24 @@ export function UserProfileDropdown() {
           </DropdownMenuItem>
 
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="py-2.5 px-4">
+            <DropdownMenuSubTrigger className="py-2.5 px-4 cursor-pointer">
               <Palette className="mr-3 h-4 w-4" />
               <span>Theme Settings</span>
+              <ChevronRight className="ml-auto h-4 w-4" />
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent side="left" align="end">
-                <DropdownMenuItem onClick={() => setTheme("light")}>
+              <DropdownMenuSubContent sideOffset={8} alignOffset={-5}>
+                <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer">
                   <Sun className="mr-2 h-4 w-4" />
                   <span>Light</span>
                   {theme === "light" && <Check className="ml-auto h-4 w-4" />}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer">
                   <Moon className="mr-2 h-4 w-4" />
                   <span>Dark</span>
                   {theme === "dark" && <Check className="ml-auto h-4 w-4" />}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
+                <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer">
                   <Monitor className="mr-2 h-4 w-4" />
                   <span>System</span>
                   {theme === "system" && <Check className="ml-auto h-4 w-4" />}
@@ -162,7 +160,6 @@ export function UserProfileDropdown() {
 
         <DropdownMenuSeparator />
 
-        {/* Permissions */}
         <div className="px-4 py-3">
           <div className="text-xs text-muted-foreground mb-2">Permissions</div>
           <div className="flex flex-wrap gap-2">
@@ -180,7 +177,6 @@ export function UserProfileDropdown() {
 
         <DropdownMenuSeparator />
 
-        {/* Logout */}
         <DropdownMenuItem className="text-red-400 focus:text-red-300 cursor-pointer py-2.5 px-4">
           <LogOut className="mr-3 h-4 w-4" />
           <span className="font-semibold">Logout</span>

@@ -86,14 +86,14 @@ export function AppSidebar() {
   }
 
   return (
-    // FIX: Using bg-card for theme-aware background
     <aside
       className={cn(
-        "flex h-full flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
+        "sticky top-0 flex h-screen flex-col bg-card border-r border-border transition-all duration-300 ease-in-out z-40",
         isCollapsed ? "w-16" : "w-64",
       )}
     >
       <div className="flex h-full flex-col">
+        {/* Header */}
         <div
           className={cn("flex items-center h-[65px] border-b border-border", isCollapsed ? "justify-center" : "px-4")}
         >
@@ -105,6 +105,7 @@ export function AppSidebar() {
           )}
         </div>
 
+        {/* Navigation */}
         <nav className="flex-1 space-y-4 py-4 px-2 overflow-y-auto">
           {navSections.map((section) => (
             <div key={section.title}>
@@ -122,6 +123,7 @@ export function AppSidebar() {
           ))}
         </nav>
 
+        {/* Collapse Toggle */}
         <div className="mt-auto p-2 border-t border-border">
           <Button
             variant="ghost"

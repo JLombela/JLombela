@@ -9,32 +9,33 @@ import { UserProfileDropdown } from "@/components/user-profile-dropdown"
 import { NotificationsDropdown } from "@/components/notifications-dropdown"
 import { AppSidebar } from "./app-sidebar"
 
-const getPageTitle = (pathname: string) => {
-  if (pathname === "/dashboard") return "Dashboard"
-  if (pathname.startsWith("/deals")) return "Deals"
-  if (pathname.startsWith("/documents")) return "Documents"
-  if (pathname.startsWith("/buyers")) return "Buyers"
-  if (pathname.startsWith("/sellers")) return "Sellers"
-  if (pathname.startsWith("/brokers")) return "Brokers"
+const getPageTitle = (pathname: string): string => {
+  if (pathname === "/dashboard") return "DASHBOARD"
+  if (pathname.startsWith("/deals")) return "DEALS"
+  if (pathname.startsWith("/documents")) return "DOCUMENTS"
+  if (pathname.startsWith("/buyers")) return "BUYERS"
+  if (pathname.startsWith("/sellers")) return "SELLERS"
+  if (pathname.startsWith("/brokers")) return "BROKERS"
   if (pathname.startsWith("/kyc-kyb")) return "KYC/KYB"
-  if (pathname.startsWith("/commissions")) return "Commissions"
-  if (pathname.startsWith("/admin")) return "Admin Panel"
+  if (pathname.startsWith("/commissions")) return "COMMISSIONS"
+  if (pathname.startsWith("/admin")) return "ADMIN PANEL"
+  if (pathname.startsWith("/settings")) return "SETTINGS"
   if (pathname.startsWith("/systems")) {
     const pathEnd = pathname.split("/").pop()
     switch (pathEnd) {
       case "user-roles":
-        return "User Roles"
+        return "USER ROLES"
       case "operations":
-        return "Operations"
+        return "OPERATIONS"
       case "agent-network":
-        return "Agent Network"
+        return "AGENT NETWORK"
       case "command-center":
-        return "Command Center"
+        return "COMMAND CENTER"
       default:
-        return "Systems"
+        return "SYSTEMS"
     }
   }
-  return "Axalio"
+  return "AXALIO"
 }
 
 export function DashboardHeader() {
@@ -42,9 +43,9 @@ export function DashboardHeader() {
   const title = getPageTitle(pathname)
 
   return (
-    <header className="flex h-[65px] shrink-0 items-center gap-4 border-b border-border bg-background/80 px-4 backdrop-blur-sm md:px-6 lg:px-8">
+    <header className="sticky top-0 flex h-[65px] shrink-0 items-center gap-4 border-b border-border bg-background/80 backdrop-blur-sm z-30">
       {/* Mobile Navigation */}
-      <div className="md:hidden">
+      <div className="md:hidden px-4">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="shrink-0 bg-transparent">
@@ -58,12 +59,13 @@ export function DashboardHeader() {
         </Sheet>
       </div>
 
-      <div className="flex-1">
-        {/* FIX: Added font-mono for typographic consistency */}
+      {/* Title - Left aligned with main content */}
+      <div className="flex-1 px-4 md:px-6 lg:px-8">
         <h1 className="font-mono text-lg font-semibold uppercase tracking-wider text-foreground">{title}</h1>
       </div>
 
-      <div className="flex items-center gap-4">
+      {/* Right side controls */}
+      <div className="flex items-center gap-4 px-4 md:px-6 lg:px-8">
         <div className="relative hidden md:block">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
