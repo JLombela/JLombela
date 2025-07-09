@@ -117,34 +117,31 @@ export default function AdminPage() {
   ]
 
   return (
-    <div className="w-full bg-black min-h-full">
+    <div className="w-full">
       <div className="space-y-6 w-full">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h2 className="text-2xl font-bold tracking-wider font-mono text-white uppercase">ADMIN PANEL</h2>
-            <p className="text-neutral-400 font-mono">Global monitoring & user management coming soon.</p>
+            <h2 className="text-2xl font-bold tracking-wider font-mono text-foreground uppercase">ADMIN PANEL</h2>
+            <p className="text-muted-foreground font-mono">Global monitoring & user management coming soon.</p>
           </div>
           <div className="flex gap-3">
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono uppercase px-6">
+            <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black font-mono uppercase px-6">
               SYSTEM SETTINGS
             </Button>
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono uppercase px-6">
+            <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black font-mono uppercase px-6">
               GENERATE REPORT
             </Button>
           </div>
         </div>
 
-        {/* Tabs */}
-        
-
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {metrics.map((metric, index) => (
-            <div key={index} className="bg-neutral-900 border border-neutral-700 p-6 rounded">
+            <div key={index} className="bg-card border border-border p-6 rounded">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-neutral-500 font-mono uppercase mb-2">{metric.label}</p>
+                  <p className="text-xs text-muted-foreground font-mono uppercase mb-2">{metric.label}</p>
                   <p className={`text-3xl font-bold font-mono ${metric.color}`}>{metric.value}</p>
                 </div>
                 <metric.icon className={`w-8 h-8 ${metric.color}`} />
@@ -156,15 +153,15 @@ export default function AdminPage() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Recent Activity */}
-          <div className="bg-neutral-900 border border-neutral-700 rounded p-6">
-            <h3 className="text-lg font-bold text-white font-mono uppercase mb-6">RECENT ACTIVITY</h3>
+          <div className="bg-card border border-border rounded p-6">
+            <h3 className="text-lg font-bold text-foreground font-mono uppercase mb-6">RECENT ACTIVITY</h3>
             <div className="space-y-4">
               {recentActivity.map((activity, index) => (
                 <div key={index} className="flex items-start gap-4">
                   <div className="w-1 h-16 bg-emerald-500 rounded-full flex-shrink-0"></div>
                   <div className="flex-1">
-                    <div className="text-xs text-neutral-500 font-mono mb-1">{activity.time}</div>
-                    <div className="text-white font-mono text-sm">
+                    <div className="text-xs text-muted-foreground font-mono mb-1">{activity.time}</div>
+                    <div className="text-foreground font-mono text-sm">
                       {activity.action} <span className={activity.entityColor}>{activity.entity}</span>
                     </div>
                   </div>
@@ -174,16 +171,16 @@ export default function AdminPage() {
           </div>
 
           {/* System Alerts */}
-          <div className="bg-neutral-900 border border-neutral-700 rounded p-6">
-            <h3 className="text-lg font-bold text-white font-mono uppercase mb-6">SYSTEM ALERTS</h3>
+          <div className="bg-card border border-border rounded p-6">
+            <h3 className="text-lg font-bold text-foreground font-mono uppercase mb-6">SYSTEM ALERTS</h3>
             <div className="space-y-4">
               {systemAlerts.map((alert, index) => (
-                <div key={index} className="bg-neutral-800 border border-neutral-700 p-4 rounded">
+                <div key={index} className="bg-muted border border-border p-4 rounded">
                   <div className="flex items-center justify-between mb-2">
                     <Badge className={`${alert.bgColor} text-white font-mono text-xs px-2 py-1`}>{alert.type}</Badge>
-                    <span className="text-xs text-neutral-500 font-mono">{alert.time}</span>
+                    <span className="text-xs text-muted-foreground font-mono">{alert.time}</span>
                   </div>
-                  <p className="text-white font-mono text-sm">{alert.message}</p>
+                  <p className="text-foreground font-mono text-sm">{alert.message}</p>
                 </div>
               ))}
             </div>
@@ -191,17 +188,17 @@ export default function AdminPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-neutral-900 border border-neutral-700 rounded p-6">
-          <h3 className="text-lg font-bold text-white font-mono uppercase mb-6">QUICK ACTIONS</h3>
+        <div className="bg-card border border-border rounded p-6">
+          <h3 className="text-lg font-bold text-foreground font-mono uppercase mb-6">QUICK ACTIONS</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {quickActions.map((action, index) => (
               <button
                 key={index}
-                className="bg-neutral-800 border border-neutral-700 hover:border-emerald-500 p-6 rounded transition-colors group"
+                className="bg-muted border border-border hover:border-axalio-green p-6 rounded transition-colors group"
               >
                 <div className="flex flex-col items-center gap-3">
-                  <action.icon className="w-8 h-8 text-neutral-400 group-hover:text-emerald-400 transition-colors" />
-                  <span className="text-white font-mono text-sm uppercase">{action.title}</span>
+                  <action.icon className="w-8 h-8 text-muted-foreground group-hover:text-axalio-green transition-colors" />
+                  <span className="text-foreground font-mono text-sm uppercase">{action.title}</span>
                 </div>
               </button>
             ))}

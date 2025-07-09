@@ -15,25 +15,25 @@ const activities = [
 
 export function CriticalActivities() {
   return (
-    <Card className="bg-neutral-900 border-neutral-800 h-full">
+    <Card className="bg-card border-border h-full">
       <CardHeader>
-        <CardTitle className="font-mono text-white tracking-wider">CRITICAL ACTIVITIES</CardTitle>
+        <CardTitle className="font-mono text-foreground tracking-wider">CRITICAL ACTIVITIES</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col justify-between h-full">
         <div className="space-y-4">
           {activities.map((activity, index) => (
-            <div key={index} className="flex items-start gap-4 p-3 bg-neutral-800 rounded-lg">
+            <div key={index} className="flex items-start gap-4 p-3 bg-muted rounded-lg">
               <activity.icon className={`h-5 w-5 flex-shrink-0 mt-0.5 ${activity.color}`} />
               <div>
-                <p className="font-mono text-sm text-white">{activity.text}</p>
-                <p className="font-mono text-xs text-neutral-400 mt-1">{activity.time}</p>
+                <p className="font-mono text-sm text-foreground">{activity.text}</p>
+                <p className="font-mono text-xs text-muted-foreground mt-1">{activity.time}</p>
               </div>
             </div>
           ))}
         </div>
-        <div className="mt-6 pt-4 border-t border-neutral-700">
+        <div className="mt-6 pt-4 border-t border-border">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-sm text-neutral-400">SYSTEM STATUS</span>
+            <span className="font-mono text-sm text-muted-foreground">SYSTEM STATUS</span>
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-axalio-green animate-pulse" />
               <span className="font-mono text-sm font-medium text-axalio-green">OPERATIONAL</span>

@@ -64,36 +64,38 @@ export function AppSidebar() {
   const pathname = usePathname()
   const [isCollapsed, setIsCollapsed] = useState(false)
 
-  const NavLink = ({ item }: { item: any }) => (
-    <Link href={item.href} title={isCollapsed ? item.label : ""}>
-      <Button
-        variant={pathname === item.href ? "secondary" : "ghost"}
-        className={cn(
-          "w-full justify-start font-mono text-sm h-10",
-          isCollapsed ? "px-2" : "px-3",
-          pathname === item.href && "bg-axalio-green/10 text-axalio-green hover:bg-axalio-green/20",
-          pathname !== item.href && "text-neutral-400 hover:bg-neutral-800 hover:text-neutral-200",
-        )}
-      >
-        <item.icon className={cn("h-4 w-4 shrink-0", !isCollapsed && "mr-3")} />
-        {!isCollapsed && item.label}
-      </Button>
-    </Link>
-  )
+  const NavLink = ({ item }: { item: any }) => {
+    const isActive = pathname.startsWith(item.href)
+    return (
+      <Link href={item.href} title={isCollapsed ? item.label : ""}>
+        <Button
+          variant="ghost"
+          className={cn(
+            "w-full justify-start font-mono text-sm h-10",
+            isCollapsed ? "px-2" : "px-3",
+            isActive
+              ? "bg-axalio-green/10 text-axalio-green hover:bg-axalio-green/20"
+              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+          )}
+        >
+          <item.icon className={cn("h-4 w-4 shrink-0", !isCollapsed && "mr-3")} />
+          {!isCollapsed && item.label}
+        </Button>
+      </Link>
+    )
+  }
 
   return (
+    // FIX: Using bg-card for theme-aware background
     <aside
       className={cn(
-        "flex h-full flex-col bg-neutral-900 border-r border-neutral-800 transition-all duration-300 ease-in-out",
-        isCollapsed ? "w-16" : "w-60",
+        "flex h-full flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
+        isCollapsed ? "w-16" : "w-64",
       )}
     >
       <div className="flex h-full flex-col">
         <div
-          className={cn(
-            "flex items-center h-[65px] border-b border-neutral-800",
-            isCollapsed ? "justify-center" : "px-4",
-          )}
+          className={cn("flex items-center h-[65px] border-b border-border", isCollapsed ? "justify-center" : "px-4")}
         >
           <Command className="h-6 w-6 text-axalio-green flex-shrink-0" />
           {!isCollapsed && (
@@ -107,7 +109,7 @@ export function AppSidebar() {
           {navSections.map((section) => (
             <div key={section.title}>
               {!isCollapsed && (
-                <h2 className="px-3 mb-2 text-xs font-semibold text-neutral-500 uppercase tracking-wider font-mono">
+                <h2 className="px-3 mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider font-mono">
                   {section.title}
                 </h2>
               )}
@@ -120,11 +122,11 @@ export function AppSidebar() {
           ))}
         </nav>
 
-        <div className="mt-auto p-2 border-t border-neutral-800">
+        <div className="mt-auto p-2 border-t border-border">
           <Button
             variant="ghost"
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="w-full justify-center h-9 text-neutral-400 hover:bg-neutral-800 hover:text-neutral-200"
+            className="w-full justify-center h-9 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
           >
             {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </Button>

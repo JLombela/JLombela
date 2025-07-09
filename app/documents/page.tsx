@@ -90,26 +90,28 @@ export default function DocumentsPage() {
   )
 
   return (
-    <div className="w-full bg-black min-h-full space-y-6">
+    <div className="w-full space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-bold tracking-wider font-mono text-white uppercase">DOCUMENTS</h2>
-          <p className="text-neutral-400 font-mono">Secure document storage & expiry tracking coming soon.</p>
+          <h2 className="text-2xl font-bold tracking-wider font-mono text-foreground uppercase">DOCUMENTS</h2>
+          <p className="text-muted-foreground font-mono">Secure document storage & expiry tracking coming soon.</p>
         </div>
         <div className="flex gap-2">
-          <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono uppercase">
+          <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black font-mono uppercase">
             UPLOAD DOCUMENT
           </Button>
-          <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono uppercase">BULK ACTIONS</Button>
+          <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black font-mono uppercase">
+            BULK ACTIONS
+          </Button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-neutral-900 border border-neutral-700 p-4 rounded">
+          <div key={index} className="bg-card border border-border p-4 rounded">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-neutral-500 font-mono uppercase tracking-wider">{stat.label}</p>
+                <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">{stat.label}</p>
                 <p className={`text-2xl font-bold font-mono ${stat.color}`}>{stat.value}</p>
               </div>
               <stat.icon className={`w-8 h-8 ${stat.color}`} />
@@ -119,42 +121,42 @@ export default function DocumentsPage() {
       </div>
 
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500 w-4 h-4" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
         <Input
           placeholder="Search documents by name, owner, or type..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-neutral-900 border-neutral-700 text-white font-mono placeholder:text-neutral-500"
+          className="pl-10 bg-card border-border text-foreground font-mono placeholder:text-muted-foreground"
         />
       </div>
 
-      <div className="bg-neutral-900 border border-neutral-700 rounded">
-        <div className="p-4 border-b border-neutral-700">
-          <h3 className="text-lg font-bold text-white font-mono uppercase tracking-wider">DOCUMENT REPOSITORY</h3>
+      <div className="bg-card border border-border rounded">
+        <div className="p-4 border-b border-border">
+          <h3 className="text-lg font-bold text-foreground font-mono uppercase tracking-wider">DOCUMENT REPOSITORY</h3>
         </div>
         <div className="p-4 space-y-4">
           {filteredDocuments.map((doc) => (
             <div
               key={doc.id}
-              className="bg-neutral-800 border border-neutral-700 p-4 rounded hover:border-emerald-500/50 hover:bg-neutral-750 transition-all duration-200 cursor-pointer"
+              className="bg-muted/50 border border-border p-4 rounded hover:border-axalio-green/50 hover:bg-accent transition-all duration-200 cursor-pointer"
               onClick={() => setSelectedDocument(doc)}
             >
               <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-start gap-3 mb-3">
-                    <FileText className="w-5 h-5 text-neutral-400 mt-1" />
+                    <FileText className="w-5 h-5 text-muted-foreground mt-1" />
                     <div className="flex-1">
-                      <h4 className="text-white font-bold font-mono text-lg hover:text-emerald-500 transition-colors">
+                      <h4 className="text-foreground font-bold font-mono text-lg hover:text-axalio-green transition-colors">
                         {doc.name}
                       </h4>
-                      <p className="text-xs text-neutral-400 font-mono">{doc.docId}</p>
+                      <p className="text-xs text-muted-foreground font-mono">{doc.docId}</p>
                     </div>
                   </div>
 
                   <div className="ml-8 space-y-2">
                     <div className="flex flex-wrap gap-2 mb-3">
-                      <Badge className="bg-neutral-700 text-neutral-300 font-mono text-xs">{doc.type}</Badge>
-                      <Badge className="bg-neutral-700 text-neutral-300 font-mono text-xs">{doc.format}</Badge>
+                      <Badge className="bg-secondary text-secondary-foreground font-mono text-xs">{doc.type}</Badge>
+                      <Badge className="bg-secondary text-secondary-foreground font-mono text-xs">{doc.format}</Badge>
                       <Badge className={`font-mono text-xs ${doc.bgColor} ${doc.statusColor}`}>{doc.status}</Badge>
                       {doc.daysLeft && (
                         <Badge className="bg-yellow-500/20 text-yellow-500 font-mono text-xs">{doc.daysLeft}</Badge>
@@ -163,27 +165,27 @@ export default function DocumentsPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-sm">
                       <div>
-                        <span className="text-neutral-500 font-mono">Owner:</span>
-                        <span className="text-white ml-2 font-mono">{doc.owner}</span>
+                        <span className="text-muted-foreground font-mono">Owner:</span>
+                        <span className="text-foreground ml-2 font-mono">{doc.owner}</span>
                       </div>
                       <div>
-                        <span className="text-neutral-500 font-mono">Uploaded:</span>
-                        <span className="text-white ml-2 font-mono">{doc.uploaded}</span>
+                        <span className="text-muted-foreground font-mono">Uploaded:</span>
+                        <span className="text-foreground ml-2 font-mono">{doc.uploaded}</span>
                       </div>
                       <div>
-                        <span className="text-neutral-500 font-mono">Expires:</span>
-                        <span className="text-white ml-2 font-mono">{doc.expires}</span>
+                        <span className="text-muted-foreground font-mono">Expires:</span>
+                        <span className="text-foreground ml-2 font-mono">{doc.expires}</span>
                       </div>
                       <div>
-                        <span className="text-neutral-500 font-mono">Size:</span>
-                        <span className="text-white ml-2 font-mono">{doc.size}</span>
+                        <span className="text-muted-foreground font-mono">Size:</span>
+                        <span className="text-foreground ml-2 font-mono">{doc.size}</span>
                       </div>
                     </div>
 
                     <div className="flex flex-wrap gap-1 mt-2">
-                      <span className="text-neutral-500 font-mono text-xs">Tags:</span>
+                      <span className="text-muted-foreground font-mono text-xs">Tags:</span>
                       {doc.tags.map((tag, index) => (
-                        <span key={tag} className="text-neutral-400 font-mono text-xs">
+                        <span key={tag} className="text-muted-foreground font-mono text-xs">
                           {tag}
                           {index < doc.tags.length - 1 && ","}
                         </span>
@@ -196,7 +198,7 @@ export default function DocumentsPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-neutral-600 text-neutral-400 hover:text-emerald-500 hover:border-emerald-500 bg-transparent font-mono"
+                    className="border-border text-muted-foreground hover:text-axalio-green hover:border-axalio-green bg-transparent font-mono"
                     onClick={(e) => {
                       e.stopPropagation()
                       setSelectedDocument(doc)
@@ -208,7 +210,7 @@ export default function DocumentsPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-neutral-600 text-neutral-400 hover:text-emerald-500 hover:border-emerald-500 bg-transparent font-mono"
+                    className="border-border text-muted-foreground hover:text-axalio-green hover:border-axalio-green bg-transparent font-mono"
                   >
                     <Download className="w-4 h-4 mr-1" />
                     DOWNLOAD
@@ -221,17 +223,17 @@ export default function DocumentsPage() {
       </div>
       {selectedDocument && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4 z-50"
           onClick={() => setSelectedDocument(null)}
         >
           <div
-            className="bg-neutral-900 border border-neutral-700 rounded-lg w-full max-w-2xl"
+            className="bg-popover border border-border rounded-lg w-full max-w-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-start justify-between p-6 border-b border-neutral-700">
+            <div className="flex items-start justify-between p-6 border-b border-border">
               <div>
-                <h2 className="text-xl font-bold text-white font-mono">{selectedDocument.name}</h2>
-                <p className="text-sm text-neutral-400 font-mono">
+                <h2 className="text-xl font-bold text-popover-foreground font-mono">{selectedDocument.name}</h2>
+                <p className="text-sm text-muted-foreground font-mono">
                   {selectedDocument.docId} • {selectedDocument.type}
                 </p>
               </div>
@@ -239,7 +241,7 @@ export default function DocumentsPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setSelectedDocument(null)}
-                className="text-neutral-400 hover:text-white"
+                className="text-muted-foreground hover:text-popover-foreground"
               >
                 ✕
               </Button>
@@ -248,7 +250,7 @@ export default function DocumentsPage() {
             <div className="p-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-sm font-medium text-neutral-300 tracking-wider mb-2 font-mono">
+                  <h3 className="text-sm font-medium text-muted-foreground tracking-wider mb-2 font-mono">
                     DOCUMENT STATUS
                   </h3>
                   <Badge className={`font-mono text-sm ${selectedDocument.bgColor} ${selectedDocument.statusColor}`}>
@@ -256,10 +258,12 @@ export default function DocumentsPage() {
                   </Badge>
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-neutral-300 tracking-wider mb-2 font-mono">DOCUMENT TAGS</h3>
+                  <h3 className="text-sm font-medium text-muted-foreground tracking-wider mb-2 font-mono">
+                    DOCUMENT TAGS
+                  </h3>
                   <div className="flex flex-wrap gap-2">
                     {selectedDocument.tags.map((tag: string) => (
-                      <Badge key={tag} className="bg-neutral-700 text-neutral-300 font-mono text-xs">
+                      <Badge key={tag} className="bg-secondary text-secondary-foreground font-mono text-xs">
                         {tag}
                       </Badge>
                     ))}
@@ -268,52 +272,52 @@ export default function DocumentsPage() {
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-neutral-300 tracking-wider mb-4 font-mono">
+                <h3 className="text-sm font-medium text-muted-foreground tracking-wider mb-4 font-mono">
                   DOCUMENT INFORMATION
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Owner:</span>
-                    <span className="text-white font-mono">{selectedDocument.owner}</span>
+                    <span className="text-muted-foreground font-mono">Owner:</span>
+                    <span className="text-popover-foreground font-mono">{selectedDocument.owner}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Type:</span>
-                    <span className="text-white font-mono">{selectedDocument.type}</span>
+                    <span className="text-muted-foreground font-mono">Type:</span>
+                    <span className="text-popover-foreground font-mono">{selectedDocument.type}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Format:</span>
-                    <span className="text-white font-mono">{selectedDocument.format}</span>
+                    <span className="text-muted-foreground font-mono">Format:</span>
+                    <span className="text-popover-foreground font-mono">{selectedDocument.format}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Size:</span>
-                    <span className="text-white font-mono">{selectedDocument.size}</span>
+                    <span className="text-muted-foreground font-mono">Size:</span>
+                    <span className="text-popover-foreground font-mono">{selectedDocument.size}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Uploaded:</span>
-                    <span className="text-white font-mono">{selectedDocument.uploaded}</span>
+                    <span className="text-muted-foreground font-mono">Uploaded:</span>
+                    <span className="text-popover-foreground font-mono">{selectedDocument.uploaded}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Expires:</span>
-                    <span className="text-white font-mono">{selectedDocument.expires}</span>
+                    <span className="text-muted-foreground font-mono">Expires:</span>
+                    <span className="text-popover-foreground font-mono">{selectedDocument.expires}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex gap-3 pt-4 border-t border-neutral-700">
-                <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono tracking-wider">
+              <div className="flex gap-3 pt-4 border-t border-border">
+                <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black font-mono tracking-wider">
                   <Eye className="w-4 h-4 mr-2" />
                   VIEW DOCUMENT
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-neutral-600 text-neutral-400 hover:text-white hover:border-neutral-500 bg-transparent font-mono tracking-wider"
+                  className="border-border text-muted-foreground hover:text-foreground bg-transparent font-mono tracking-wider"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   DOWNLOAD
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-neutral-600 text-neutral-400 hover:text-white hover:border-neutral-500 bg-transparent font-mono tracking-wider"
+                  className="border-border text-muted-foreground hover:text-foreground bg-transparent font-mono tracking-wider"
                 >
                   UPDATE EXPIRY
                 </Button>

@@ -58,40 +58,37 @@ export function formatFileSize(bytes: number) {
 
 // Status utilities
 export function getStatusColor(status: string) {
-  const statusColors = {
+  const statusColors: Record<string, string> = {
     // Deal statuses
     draft: "bg-neutral-500/20 text-neutral-300",
-    pop_verified: "bg-emerald-500/20 text-emerald-500",
-    pof_verified: "bg-emerald-600/20 text-emerald-400",
+    pop_verified: "bg-axalio-green/20 text-axalio-green",
+    pof_verified: "bg-axalio-green/20 text-axalio-green/90",
     contracts_signed: "bg-blue-500/20 text-blue-400",
     in_transit: "bg-yellow-500/20 text-yellow-400",
-    delivered: "bg-emerald-400/20 text-emerald-300",
+    delivered: "bg-axalio-green/20 text-axalio-green/80",
     completed: "bg-white/20 text-white",
     cancelled: "bg-red-500/20 text-red-500",
 
     // KYC statuses
     pending_review: "bg-yellow-500/20 text-yellow-400",
-    approved: "bg-emerald-500/20 text-emerald-500",
+    approved: "bg-axalio-green/20 text-axalio-green",
     rejected: "bg-red-500/20 text-red-500",
     requires_documents: "bg-red-500/20 text-red-500",
     in_verification: "bg-blue-500/20 text-blue-400",
 
     // Document statuses
-    active: "bg-emerald-500/20 text-emerald-500",
+    active: "bg-axalio-green/20 text-axalio-green",
     expired: "bg-red-500/20 text-red-500",
     expiring_soon: "bg-yellow-500/20 text-yellow-400",
-    pending_review: "bg-blue-500/20 text-blue-400",
 
     // Commission statuses
     calculated: "bg-blue-500/20 text-blue-400",
     pending: "bg-yellow-500/20 text-yellow-400",
-    paid: "bg-emerald-500/20 text-emerald-500",
+    paid: "bg-axalio-green/20 text-axalio-green",
     overdue: "bg-red-500/20 text-red-500",
 
     // User statuses
-    active: "bg-emerald-500/20 text-emerald-500",
     suspended: "bg-red-500/20 text-red-500",
-    pending: "bg-yellow-500/20 text-yellow-400",
   }
 
   return statusColors[status] || "bg-neutral-500/20 text-neutral-300"

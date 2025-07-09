@@ -1,47 +1,59 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Roboto_Mono as RobotoMono } from "next/font/google"
-import "./globals.css"
+import { Inter, IBM_Plex_Mono } from "next/font/google"
+import { headers } from "next/headers"
 import { cn } from "@/lib/utils"
+import { ThemeProvider } from "@/components/theme-provider"
 import { AppSidebar } from "@/components/app-sidebar"
 import { DashboardHeader } from "@/components/dashboard-header"
-import { ThemeProvider } from "@/components/theme-provider"
+import "./globals.css"
 
-const inter = Inter({
+const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 })
 
-const robotoMono = RobotoMono({
+const fontMono = IBM_Plex_Mono({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-mono",
 })
 
 export const metadata: Metadata = {
-  title: "Axalio - Tactical Command Interface",
-  description: "Unified command center for global commodity trading.",
+  title: "Axalio | Tactical Command Interface",
+  description: "Next-generation platform for global asset exchange.",
     generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
+  const pathname = headers().get("x-next-pathname") || ""
+  const isAuthPage = pathname.startsWith("/auth")
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("bg-black font-sans antialiased", inter.variable, robotoMono.variable)}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <div className="flex h-screen w-full overflow-hidden">
-            {/* Desktop Sidebar */}
-            <div className="hidden md:flex">
-              <AppSidebar />
+      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable, fontMono.variable)}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {isAuthPage ? (
+            <div className="flex h-screen items-center justify-center bg-neutral-950">{children}</div>
+          ) : (
+            <div className="flex h-screen overflow-hidden bg-background">
+              {/* FIX: Sidebar container is now part of the main layout flow */}
+              <div className="hidden md:flex">
+                <AppSidebar />
+              </div>
+              <div className="flex flex-1 flex-col overflow-hidden">
+                <DashboardHeader />
+                <main className="flex-1 overflow-y-auto">
+                  {/* FIX: Content padding moved here to align with header */}
+                  <div className="h-full w-full p-4 md:p-6 lg:p-8">{children}</div>
+                </main>
+              </div>
             </div>
-            <div className="flex flex-1 flex-col overflow-hidden">
-              <DashboardHeader />
-              <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">{children}</main>
-            </div>
-          </div>
+          )}
         </ThemeProvider>
       </body>
     </html>

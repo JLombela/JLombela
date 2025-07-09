@@ -4,52 +4,52 @@
 
 @layer base {
   :root {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 122 71% 50%; /* #39C64C */
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 122 71% 50%; /* #39C64C */
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
     --radius: 0.5rem;
-
-    /* Axalio Custom Colors */
-    --axalio-green: 122 71% 50%; /* #39C64C */
-    --axalio-green-hover: 122 71% 45%; /* #2d9a3d */
+    --axalio-green: 122 71% 50%;
+    --axalio-blue: 217 91% 60%;
+    --axalio-yellow: 48 96% 58%;
+    --axalio-red: 0 84% 60%;
   }
 
   .dark {
-    --background: 0 0% 0%;
+    --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
+    --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
+    --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 122 71% 50%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 14.9%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 122 71% 50%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
   }
 }
 
@@ -57,86 +57,51 @@
   * {
     @apply border-border;
   }
-  html,
-  body,
-  #__next {
-    @apply h-full;
-  }
   body {
-    @apply bg-black text-foreground font-sans antialiased;
-  }
-  .font-mono {
-    font-family: "Roboto Mono", monospace;
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-/* Axalio Custom Utilities */
 @layer utilities {
   .text-axalio-green {
     color: hsl(var(--axalio-green));
   }
-
   .bg-axalio-green {
     background-color: hsl(var(--axalio-green));
   }
-
-  .border-axalio-green {
-    border-color: hsl(var(--axalio-green));
-  }
-
-  .hover\:bg-axalio-green:hover {
-    background-color: hsl(var(--axalio-green-hover));
-  }
-
-  .focus\:ring-axalio-green:focus {
-    --tw-ring-color: hsl(var(--axalio-green));
-  }
-
-  .focus\:border-axalio-green:focus {
-    border-color: hsl(var(--axalio-green));
-  }
 }
 
-/* Override emerald colors to use Axalio green */
 @layer components {
-  .text-emerald-400,
-  .text-emerald-500,
-  .text-emerald-600 {
-    color: hsl(var(--axalio-green)) !important;
+  /* FIX: Button styles now use CSS variables for consistency */
+  .btn-outline-green {
+    @apply bg-transparent border text-axalio-green border-axalio-green
+           hover:bg-axalio-green hover:text-black;
   }
 
-  .bg-emerald-400,
-  .bg-emerald-500,
-  .bg-emerald-600 {
-    background-color: hsl(var(--axalio-green)) !important;
+  .btn-outline-blue {
+    @apply bg-transparent border text-blue-500 border-blue-500
+           hover:bg-blue-500 hover:text-white;
   }
 
-  .border-emerald-400,
-  .border-emerald-500,
-  .border-emerald-600 {
-    border-color: hsl(var(--axalio-green)) !important;
+  /* FIX: Badge styles now use CSS variables and transparency */
+  .badge-status {
+    @apply border-transparent font-semibold px-2.5 py-0.5 text-xs;
   }
-
-  .hover\:bg-emerald-400:hover,
-  .hover\:bg-emerald-500:hover,
-  .hover\:bg-emerald-600:hover {
-    background-color: hsl(var(--axalio-green-hover)) !important;
+  .badge-status-completed {
+    background-color: hsl(var(--axalio-green) / 0.15);
+    color: hsl(var(--axalio-green));
   }
-
-  /* Badge overrides */
-  .bg-green-600,
-  .bg-green-500 {
-    background-color: hsl(var(--axalio-green)) !important;
-    color: black !important;
+  .badge-status-in-transit {
+    background-color: hsl(var(--axalio-blue) / 0.15);
+    color: hsl(var(--axalio-blue));
   }
-
-  /* Button overrides */
-  .bg-primary {
-    background-color: hsl(var(--axalio-green)) !important;
-    color: black !important;
+  .badge-status-pending {
+    background-color: hsl(var(--axalio-yellow) / 0.15);
+    color: hsl(var(--axalio-yellow));
   }
-
-  .hover\:bg-primary\/90:hover {
-    background-color: hsl(var(--axalio-green-hover)) !important;
+  .badge-status-cancelled {
+    background-color: hsl(var(--axalio-red) / 0.15);
+    color: hsl(var(--axalio-red));
   }
 }

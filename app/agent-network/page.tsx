@@ -100,10 +100,10 @@ export default function AgentNetworkPage() {
           <p className="text-sm text-neutral-400">Manage and monitor field operatives</p>
         </div>
         <div className="flex gap-2">
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white tracking-wider uppercase">
+          <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black tracking-wider uppercase">
             DEPLOY AGENT
           </Button>
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white tracking-wider uppercase">
+          <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black tracking-wider uppercase">
             <Filter className="w-4 h-4 mr-2" />
             FILTER
           </Button>
@@ -155,9 +155,9 @@ export default function AgentNetworkPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs text-neutral-400 tracking-wider">IN TRAINING</p>
-                <p className="text-2xl font-bold text-orange-500 font-mono">23</p>
+                <p className="text-2xl font-bold text-axalio-green font-mono">23</p>
               </div>
-              <Shield className="w-8 h-8 text-orange-500" />
+              <Shield className="w-8 h-8 text-axalio-green" />
             </div>
           </CardContent>
         </Card>
@@ -203,7 +203,7 @@ export default function AgentNetworkPage() {
                               : agent.status === "standby"
                                 ? "bg-neutral-500"
                                 : agent.status === "training"
-                                  ? "bg-orange-500"
+                                  ? "bg-axalio-green"
                                   : "bg-red-500"
                           }`}
                         ></div>
@@ -229,7 +229,7 @@ export default function AgentNetworkPage() {
                           agent.risk === "critical"
                             ? "bg-red-500/20 text-red-500"
                             : agent.risk === "high"
-                              ? "bg-orange-500/20 text-orange-500"
+                              ? "bg-axalio-green/20 text-axalio-green"
                               : agent.risk === "medium"
                                 ? "bg-neutral-500/20 text-neutral-300"
                                 : "bg-white/20 text-white"
@@ -239,7 +239,7 @@ export default function AgentNetworkPage() {
                       </span>
                     </td>
                     <td className="py-3 px-4">
-                      <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-orange-500">
+                      <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-axalio-green">
                         <MoreHorizontal className="w-4 h-4" />
                       </Button>
                     </td>
@@ -280,7 +280,7 @@ export default function AgentNetworkPage() {
                           : selectedAgent.status === "standby"
                             ? "bg-neutral-500"
                             : selectedAgent.status === "training"
-                              ? "bg-orange-500"
+                              ? "bg-axalio-green"
                               : "bg-red-500"
                       }`}
                     ></div>
@@ -302,7 +302,7 @@ export default function AgentNetworkPage() {
                       selectedAgent.risk === "critical"
                         ? "bg-red-500/20 text-red-500"
                         : selectedAgent.risk === "high"
-                          ? "bg-orange-500/20 text-orange-500"
+                          ? "bg-axalio-green/20 text-axalio-green"
                           : selectedAgent.risk === "medium"
                             ? "bg-neutral-500/20 text-neutral-300"
                             : "bg-white/20 text-white"
@@ -313,7 +313,7 @@ export default function AgentNetworkPage() {
                 </div>
               </div>
               <div className="flex gap-2 pt-4">
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white tracking-wider uppercase">
+                <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black tracking-wider uppercase">
                   ASSIGN MISSION
                 </Button>
                 <Button

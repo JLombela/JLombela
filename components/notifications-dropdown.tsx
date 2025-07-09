@@ -1,107 +1,142 @@
 "use client"
 
-import { Bell, Check, FileText, ShieldCheck, DollarSign, TriangleAlert } from "lucide-react"
-
+import { Bell, Check, X, AlertCircle, Info, CheckCircle } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
-const mockNotifications = [
+// Mock notification data
+const notifications = [
   {
-    id: "deal-1",
-    icon: <FileText className="h-5 w-5 text-blue-400" />,
-    title: "Deal #AX789-AU",
-    description: "Contract signed by buyer. Awaiting final confirmation.",
-    timestamp: "5 min ago",
-    unread: true,
+    id: 1,
+    type: "alert",
+    title: "KYC Review Required",
+    message: "New client documentation needs review",
+    time: "2 min ago",
+    read: false,
   },
   {
-    id: "kyc-1",
-    icon: <ShieldCheck className="h-5 w-5 text-green-500" />,
-    title: "KYC Approved",
-    description: "Seller 'Ghana Gold Co.' has been verified.",
-    timestamp: "25 min ago",
-    unread: true,
+    id: 2,
+    type: "success",
+    title: "Deal Completed",
+    message: "Transaction #TX-2024-001 has been finalized",
+    time: "15 min ago",
+    read: false,
   },
   {
-    id: "commission-1",
-    icon: <DollarSign className="h-5 w-5 text-green-400" />,
-    title: "Commission Ready",
-    description: "$12,500 commission from deal #AX782-BR is ready for payout.",
-    timestamp: "1 hour ago",
-    unread: false,
+    id: 3,
+    type: "info",
+    title: "System Update",
+    message: "Platform maintenance scheduled for tonight",
+    time: "1 hour ago",
+    read: true,
   },
   {
-    id: "system-1",
-    icon: <TriangleAlert className="h-5 w-5 text-red-500" />,
-    title: "System Maintenance",
-    description: "Scheduled maintenance tonight at 23:00 UTC.",
-    timestamp: "3 hours ago",
-    unread: false,
+    id: 4,
+    type: "alert",
+    title: "Compliance Alert",
+    message: "AML screening flagged for review",
+    time: "2 hours ago",
+    read: true,
   },
 ]
 
-const unreadCount = mockNotifications.filter((n) => n.unread).length
+const getNotificationIcon = (type: string) => {
+  switch (type) {
+    case "alert":
+      return <AlertCircle className="h-4 w-4 text-yellow-500" />
+    case "success":
+      return <CheckCircle className="h-4 w-4 text-axalio-green" />
+    case "info":
+      return <Info className="h-4 w-4 text-blue-500" />
+    default:
+      return <Bell className="h-4 w-4 text-neutral-400" />
+  }
+}
 
 export function NotificationsDropdown() {
+  const unreadCount = notifications.filter((n) => !n.read).length
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="relative text-neutral-400 hover:bg-neutral-800 hover:text-white"
-          aria-label={`Open notifications (${unreadCount} unread)`}
-        >
-          <Bell className="h-5 w-5" />
+        <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-accent">
+          <Bell className="h-5 w-5 text-muted-foreground" />
           {unreadCount > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-emerald-500 px-1 text-[10px] font-bold leading-none text-black">
+            <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-axalio-green text-black text-xs font-bold">
               {unreadCount}
-            </span>
+            </Badge>
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-96 bg-[#1c1c22] border-neutral-700 text-neutral-200 p-0">
-        <DropdownMenuLabel className="px-4 py-3 text-base font-semibold text-white">Notifications</DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-neutral-700" />
-        <div className="max-h-96 overflow-y-auto">
-          {mockNotifications.map((n) => (
-            <DropdownMenuItem
-              key={n.id}
-              className="flex items-start gap-4 px-4 py-3 hover:bg-neutral-800/60 focus:bg-neutral-800/60 cursor-pointer"
+
+      <DropdownMenuContent className="w-80 bg-popover border-border font-mono" align="end" sideOffset={10}>
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 pb-2">
+          <h3 className="text-sm font-semibold text-popover-foreground">Notifications</h3>
+          <div className="flex items-center gap-2">
+            <Badge
+              variant="outline"
+              className="text-xs font-semibold border-axalio-green text-axalio-green bg-transparent px-2 py-0.5"
             >
-              <div className="mt-0.5">{n.icon}</div>
-              <div className="flex-grow">
-                <p className="font-semibold text-white">{n.title}</p>
-                <p className="text-sm text-neutral-400">{n.description}</p>
-                <p className="text-xs text-neutral-500 mt-1">{n.timestamp}</p>
-              </div>
-              {n.unread && <div className="h-2 w-2 rounded-full bg-blue-500 mt-1.5 shrink-0" />}
-            </DropdownMenuItem>
-          ))}
+              {unreadCount} NEW
+            </Badge>
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-accent">
+              <Check className="h-3 w-3 text-muted-foreground" />
+            </Button>
+          </div>
         </div>
-        <DropdownMenuSeparator className="bg-neutral-700" />
-        <div className="flex items-center justify-between px-4 py-2">
+
+        <DropdownMenuSeparator className="bg-border" />
+
+        {/* Notifications List */}
+        <ScrollArea className="h-80">
+          <div className="py-1">
+            {notifications.map((notification) => (
+              <DropdownMenuItem
+                key={notification.id}
+                className="flex items-start gap-3 p-4 cursor-pointer hover:bg-accent focus:bg-accent"
+              >
+                <div className="flex-shrink-0 mt-0.5">{getNotificationIcon(notification.type)}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-sm font-medium text-popover-foreground truncate">{notification.title}</p>
+                    {!notification.read && <div className="h-2 w-2 bg-axalio-green rounded-full flex-shrink-0 ml-2" />}
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-1">{notification.message}</p>
+                  <p className="text-xs text-muted-foreground">{notification.time}</p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 hover:bg-accent"
+                >
+                  <X className="h-3 w-3 text-muted-foreground" />
+                </Button>
+              </DropdownMenuItem>
+            ))}
+          </div>
+        </ScrollArea>
+
+        <DropdownMenuSeparator className="bg-border" />
+
+        {/* Footer */}
+        <div className="p-2">
           <Button
-            variant="outline"
-            className="h-8 border-green-500/50 text-green-400 hover:bg-green-500/10 hover:text-green-300 focus:ring-green-500 bg-transparent px-3"
+            variant="ghost"
+            className="w-full text-xs text-muted-foreground hover:text-accent-foreground hover:bg-accent"
           >
             View All Notifications
-          </Button>
-          <Button variant="ghost" className="h-8 text-neutral-400 hover:bg-neutral-800 hover:text-white px-3">
-            <Check className="mr-2 h-4 w-4" />
-            Mark all as read
           </Button>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
-
-export default NotificationsDropdown
