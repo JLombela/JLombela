@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function CommandCenterPage() {
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 px-0 py-0">
       {/* Main Dashboard Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Agent Status Overview */}

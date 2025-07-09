@@ -25,8 +25,7 @@ export const DOCUMENT_TYPES = {
   EXPORT_PERMIT: "export_permit",
   ASSAY_REPORT: "assay_report",
   INSURANCE_CERTIFICATE: "insurance_certificate",
-  PROOF_OF_FUNDS: "proof_of_funds",
-  PROOF_OF_PRODUCT: "proof_of_product",
+  PROOF_OF_FUNDS: "proof_of_product",
   CONTRACT: "contract",
   OTHER: "other",
 } as const
@@ -120,11 +119,11 @@ export const PAGINATION = {
   MAX_PAGE_SIZE: 100,
 } as const
 
-// Colors (Emerald theme)
+// Colors (Custom Green theme)
 export const COLORS = {
-  PRIMARY: "#10b981", // emerald-500
-  PRIMARY_DARK: "#059669", // emerald-600
-  SUCCESS: "#10b981",
+  PRIMARY: "#39C64C", // Custom green
+  PRIMARY_DARK: "#2ea043", // Darker shade of custom green
+  SUCCESS: "#39C64C",
   WARNING: "#f59e0b",
   ERROR: "#ef4444",
   INFO: "#3b82f6",

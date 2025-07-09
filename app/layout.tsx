@@ -1,14 +1,25 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Roboto_Mono as RobotoMono } from "next/font/google"
 import "./globals.css"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
+import { AppSidebar } from "@/components/app-sidebar"
+import { DashboardHeader } from "@/components/dashboard-header"
+import { ThemeProvider } from "@/components/theme-provider"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
+const robotoMono = RobotoMono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+})
 
 export const metadata: Metadata = {
-  title: "Axalio MVP - Tactical Command Interface",
-  description: "Advanced tactical command interface for Axalio MVP platform",
+  title: "Axalio - Tactical Command Interface",
+  description: "Unified command center for global commodity trading.",
     generator: 'v0.dev'
 }
 
@@ -18,13 +29,20 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark h-full bg-black">
-      <body className={`${inter.className} bg-black min-h-full w-full overflow-x-hidden`}>
-        <SidebarProvider>
-          <div className="min-h-screen w-full bg-black overflow-x-hidden">
-            <main className="w-full h-full bg-black overflow-x-hidden">{children}</main>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn("bg-black font-sans antialiased", inter.variable, robotoMono.variable)}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <div className="flex h-screen w-full overflow-hidden">
+            {/* Desktop Sidebar */}
+            <div className="hidden md:flex">
+              <AppSidebar />
+            </div>
+            <div className="flex flex-1 flex-col overflow-hidden">
+              <DashboardHeader />
+              <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">{children}</main>
+            </div>
           </div>
-        </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

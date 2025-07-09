@@ -5,7 +5,7 @@ import { Handshake, TrendingUp, DollarSign, Users } from "lucide-react"
 
 export default function BrokerDashboardPage() {
   return (
-    <div className="p-6 space-y-6 font-mono">
+    <div className="p-6 space-y-6 font-mono px-0 py-0">
       {/* Page Header */}
       <div className="space-y-2">
         <h1 className="text-2xl font-bold text-white font-mono tracking-wider">BROKER DASHBOARD</h1>

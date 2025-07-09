@@ -1,12 +1,17 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, Plus, Eye, Edit, AlertTriangle, CheckCircle, Clock, FileText, Users } from "lucide-react"
+import { Search, Filter, Plus, Eye, AlertTriangle, CheckCircle, Clock, FileText, Users } from "lucide-react"
+import { KYCDetailsModal } from "@/components/kyc-details-modal"
 
 export default function KycKybPage() {
+  const [selectedApplication, setSelectedApplication] = useState<any>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const applications = [
     {
       id: "KYC-001",
@@ -22,6 +27,7 @@ export default function KycKybPage() {
     {
       id: "KYC-002",
       name: "JOHN MITCHELL",
+      applicant: "JOHN MITCHELL",
       type: "KYC",
       status: "PENDING",
       riskLevel: "MEDIUM",
@@ -44,6 +50,7 @@ export default function KycKybPage() {
     {
       id: "KYC-004",
       name: "SARAH CHEN",
+      applicant: "SARAH CHEN",
       type: "KYC",
       status: "UNDER_REVIEW",
       riskLevel: "LOW",
@@ -51,6 +58,29 @@ export default function KycKybPage() {
       reviewedBy: "COMPLIANCE TEAM A",
       documents: 7,
       completionRate: "90%",
+    },
+    {
+      id: "KYC-005",
+      applicant: "MINING SOLUTIONS INC",
+      type: "KYB",
+      status: "PENDING",
+      riskLevel: "MEDIUM",
+      submittedDate: "2024-01-16",
+      reviewedBy: "PENDING ASSIGNMENT",
+      documents: 6,
+      completionRate: "80%",
+    },
+    {
+      id: "KYC-006",
+      name: "DAVID RODRIGUEZ",
+      applicant: "DAVID RODRIGUEZ",
+      type: "KYC",
+      status: "APPROVED",
+      riskLevel: "LOW",
+      submittedDate: "2024-01-12",
+      reviewedBy: "COMPLIANCE TEAM B",
+      documents: 9,
+      completionRate: "100%",
     },
   ]
 
@@ -109,124 +139,123 @@ export default function KycKybPage() {
     }
   }
 
+  const handleApplicationClick = (application: any) => {
+    setSelectedApplication(application)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedApplication(null)
+  }
+
   return (
     <div className="min-h-screen bg-black text-white font-mono">
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 px-0 py-0">
         {/* Header */}
-        <div className="space-y-2">
-          <h1 className="text-2xl font-bold text-white font-mono tracking-wider">KYC/KYB COMPLIANCE</h1>
-          <p className="text-neutral-400 font-mono">
-            Monitor Know Your Customer and Know Your Business compliance processes.
-          </p>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((stat, index) => (
-            <Card key={index} className="bg-neutral-900 border-neutral-800">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-neutral-400 tracking-wider font-mono">{stat.title}</p>
-                    <p className="text-2xl font-bold text-white font-mono">{stat.value}</p>
-                    <p
-                      className={`text-xs font-mono ${stat.change.startsWith("+") ? "text-emerald-400" : "text-red-400"}`}
-                    >
-                      {stat.change}
-                    </p>
-                  </div>
-                  <stat.icon className="h-8 w-8 text-emerald-400" />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Controls */}
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold text-white font-mono tracking-wider">KYC/KYB</h1>
+            <p className="text-neutral-400 font-mono">
+              Know Your Customer and Know Your Business compliance management.
+            </p>
+          </div>
           <div className="flex gap-2">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 h-4 w-4" />
-              <Input
-                placeholder="SEARCH APPLICATIONS..."
-                className="pl-10 bg-neutral-900 border-neutral-700 text-white font-mono tracking-wider placeholder:text-neutral-500 placeholder:uppercase"
-              />
-            </div>
-            <Button variant="outline" className="border-neutral-700 text-white font-mono tracking-wider bg-transparent">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-mono tracking-wider">
+              <Plus className="h-4 w-4 mr-2" />
+              NEW APPLICATION
+            </Button>
+            <Button
+              variant="outline"
+              className="border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white font-mono tracking-wider bg-transparent"
+            >
               <Filter className="h-4 w-4 mr-2" />
               FILTER
             </Button>
           </div>
-          <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-mono tracking-wider">
-            <Plus className="h-4 w-4 mr-2" />
-            NEW APPLICATION
-          </Button>
+        </div>
+
+        {/* Metrics Row */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-neutral-900 border border-neutral-800 p-4 rounded">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 h-4 w-4" />
+              <Input
+                placeholder="Search applications..."
+                className="pl-10 bg-neutral-900 border-neutral-700 text-white font-mono placeholder:text-neutral-500"
+              />
+            </div>
+          </div>
+
+          {stats.slice(0, 3).map((stat, index) => (
+            <div key={index} className="bg-neutral-900 border border-neutral-800 p-4 rounded">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-neutral-400 tracking-wider font-mono">{stat.title}</p>
+                  <p className="text-2xl font-bold text-white font-mono">{stat.value}</p>
+                </div>
+                <stat.icon className="h-6 w-6 text-emerald-400" />
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Applications Table */}
-        <Card className="bg-neutral-900 border-neutral-800">
-          <CardHeader>
-            <CardTitle className="text-white font-mono tracking-wider">COMPLIANCE APPLICATIONS</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+        <div className="bg-neutral-900 border border-neutral-800 rounded">
+          <div className="p-6">
+            <h2 className="text-lg font-bold text-white font-mono tracking-wider mb-6">COMPLIANCE APPLICATIONS</h2>
+
+            {/* Table Header */}
+            <div className="grid grid-cols-8 gap-4 pb-4 border-b border-neutral-700">
+              <div className="text-neutral-400 font-mono text-sm tracking-wider">APPLICATION ID</div>
+              <div className="text-neutral-400 font-mono text-sm tracking-wider">APPLICANT</div>
+              <div className="text-neutral-400 font-mono text-sm tracking-wider">TYPE</div>
+              <div className="text-neutral-400 font-mono text-sm tracking-wider">SUBMITTED</div>
+              <div className="text-neutral-400 font-mono text-sm tracking-wider">COMPLETION</div>
+              <div className="text-neutral-400 font-mono text-sm tracking-wider">STATUS</div>
+              <div className="text-neutral-400 font-mono text-sm tracking-wider">REVIEWER</div>
+              <div className="text-neutral-400 font-mono text-sm tracking-wider">ACTIONS</div>
+            </div>
+
+            {/* Table Rows */}
+            <div className="space-y-4 mt-4">
               {applications.map((app) => (
                 <div
                   key={app.id}
-                  className="flex items-center justify-between p-4 bg-neutral-800 rounded-lg border border-neutral-700"
+                  className="grid grid-cols-8 gap-4 py-4 hover:bg-neutral-800/50 cursor-pointer transition-colors rounded"
+                  onClick={() => handleApplicationClick(app)}
                 >
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-center gap-3">
-                      <h3 className="font-semibold text-white font-mono tracking-wider">{app.applicant || app.name}</h3>
-                      <Badge className={`font-mono tracking-wider ${getStatusColor(app.status)}`}>
-                        {app.status.replace("_", " ")}
-                      </Badge>
-                      <Badge variant="outline" className={`font-mono tracking-wider ${getRiskColor(app.riskLevel)}`}>
-                        {app.riskLevel} RISK
-                      </Badge>
-                      <Badge variant="outline" className="border-neutral-400 text-neutral-400 font-mono tracking-wider">
-                        {app.type}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-neutral-400 font-mono">REVIEWED BY: {app.reviewedBy}</p>
-                    <div className="flex gap-4 text-xs text-neutral-400 font-mono">
-                      <span>ID: {app.id}</span>
-                      <span>SUBMITTED: {app.submittedDate}</span>
-                      <span>DOCUMENTS: {app.documents}</span>
-                      <span>COMPLETION: {app.completionRate}</span>
-                    </div>
+                  <div className="text-white font-mono text-sm font-semibold">{app.id}</div>
+                  <div className="text-white font-mono text-sm">{app.applicant}</div>
+                  <div className="text-white font-mono text-sm">{app.type}</div>
+                  <div className="text-neutral-400 font-mono text-sm">{app.submittedDate}</div>
+                  <div className="text-white font-mono text-sm">{app.completionRate}</div>
+                  <div>
+                    <Badge className={`font-mono text-xs ${getStatusColor(app.status)}`}>
+                      {app.status === "UNDER_REVIEW"
+                        ? "Under Review"
+                        : app.status.charAt(0) + app.status.slice(1).toLowerCase()}
+                    </Badge>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="text-neutral-400 font-mono text-sm">{app.reviewedBy}</div>
+                  <div>
                     <Button
                       size="sm"
-                      variant="outline"
-                      className="border-neutral-600 text-white font-mono tracking-wider bg-transparent"
+                      variant="ghost"
+                      className="text-neutral-400 hover:text-white p-1"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleApplicationClick(app)
+                      }}
                     >
                       <Eye className="h-4 w-4" />
-                      REVIEW
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-neutral-600 text-white font-mono tracking-wider bg-transparent"
-                    >
-                      <Edit className="h-4 w-4" />
-                      EDIT
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white font-mono tracking-wider bg-transparent"
-                    >
-                      <CheckCircle className="h-4 w-4" />
-                      APPROVE
                     </Button>
                   </div>
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Compliance Dashboard */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -297,6 +326,9 @@ export default function KycKybPage() {
           </Card>
         </div>
       </div>
+
+      {/* KYC Details Modal */}
+      <KYCDetailsModal application={selectedApplication} isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   )
 }

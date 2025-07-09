@@ -1,155 +1,210 @@
 "use client"
 
 import { useState } from "react"
-import { Search, Eye, Settings, Users, Shield, Activity } from "lucide-react"
+import { Users, FileText, DollarSign, TrendingUp, Settings, Database } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
 
 export default function AdminPage() {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [activeTab, setActiveTab] = useState("Overview")
 
-  const adminActions = [
+  const tabs = ["Overview", "Users", "System", "Reports"]
+
+  const metrics = [
     {
-      id: "ADM-001",
-      action: "User Role Updated",
-      user: "john.doe@goldenmining.com",
-      timestamp: "2025-01-07 14:32:15",
-      details: "Changed role from User to Seller",
-      status: "COMPLETED",
-      statusColor: "text-emerald-500",
-      bgColor: "bg-emerald-500/10",
+      label: "TOTAL USERS",
+      value: "1,247",
+      icon: Users,
+      color: "text-emerald-400",
     },
     {
-      id: "ADM-002",
-      action: "Document Verification",
-      user: "system@axalio.com",
-      timestamp: "2025-01-07 13:45:22",
-      details: "KYC document approved for Swiss Refinery AG",
-      status: "COMPLETED",
-      statusColor: "text-emerald-500",
-      bgColor: "bg-emerald-500/10",
+      label: "ACTIVE DEALS",
+      value: "47",
+      icon: FileText,
+      color: "text-emerald-400",
     },
     {
-      id: "ADM-003",
-      action: "Deal Status Change",
-      user: "admin@axalio.com",
-      timestamp: "2025-01-07 12:18:44",
-      details: "Deal DEAL-2025-001 marked as completed",
-      status: "COMPLETED",
-      statusColor: "text-emerald-500",
-      bgColor: "bg-emerald-500/10",
+      label: "TOTAL VOLUME",
+      value: "$2.4M",
+      icon: DollarSign,
+      color: "text-emerald-400",
     },
     {
-      id: "ADM-004",
-      action: "Security Alert",
-      user: "security@axalio.com",
-      timestamp: "2025-01-07 11:22:33",
-      details: "Multiple failed login attempts detected",
-      status: "INVESTIGATING",
-      statusColor: "text-yellow-500",
-      bgColor: "bg-yellow-500/10",
+      label: "SYSTEM UPTIME",
+      value: "99.9%",
+      icon: TrendingUp,
+      color: "text-emerald-400",
     },
   ]
 
-  const stats = [
-    { label: "TOTAL USERS", value: "156", icon: Users, color: "text-blue-500" },
-    { label: "ACTIVE SESSIONS", value: "23", icon: Activity, color: "text-emerald-500" },
-    { label: "SECURITY ALERTS", value: "3", icon: Shield, color: "text-yellow-500" },
-    { label: "SYSTEM UPTIME", value: "99.9%", icon: Settings, color: "text-emerald-500" },
+  const recentActivity = [
+    {
+      time: "2 min ago",
+      action: "New user registration",
+      entity: "Golden Mining Co.",
+      entityColor: "text-emerald-400",
+    },
+    {
+      time: "5 min ago",
+      action: "Deal status updated",
+      entity: "DEAL-2025-047",
+      entityColor: "text-emerald-400",
+    },
+    {
+      time: "12 min ago",
+      action: "Document uploaded",
+      entity: "Swiss Refinery AG",
+      entityColor: "text-emerald-400",
+    },
+    {
+      time: "18 min ago",
+      action: "KYC approved",
+      entity: "Mining Brokers Ltd",
+      entityColor: "text-emerald-400",
+    },
+    {
+      time: "25 min ago",
+      action: "Commission processed",
+      entity: "COM-2025-001",
+      entityColor: "text-emerald-400",
+    },
   ]
 
-  const filteredActions = adminActions.filter(
-    (action) =>
-      action.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      action.user.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      action.details.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      action.id.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  const systemAlerts = [
+    {
+      time: "1 hour ago",
+      type: "WARNING",
+      message: "Document storage at 85% capacity",
+      bgColor: "bg-yellow-600",
+    },
+    {
+      time: "2 hours ago",
+      type: "INFO",
+      message: "Scheduled maintenance in 24 hours",
+      bgColor: "bg-blue-600",
+    },
+    {
+      time: "3 hours ago",
+      type: "ERROR",
+      message: "KYC API rate limit reached",
+      bgColor: "bg-red-600",
+    },
+    {
+      time: "6 hours ago",
+      type: "SUCCESS",
+      message: "Backup completed successfully",
+      bgColor: "bg-emerald-600",
+    },
+  ]
+
+  const quickActions = [
+    {
+      title: "MANAGE USERS",
+      icon: Users,
+    },
+    {
+      title: "REVIEW KYC",
+      icon: FileText,
+    },
+    {
+      title: "SYSTEM CONFIG",
+      icon: Settings,
+    },
+    {
+      title: "DATABASE",
+      icon: Database,
+    },
+  ]
 
   return (
     <div className="w-full bg-black min-h-full">
       <div className="space-y-6 w-full">
+        {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h2 className="text-2xl font-bold tracking-wider font-mono text-white uppercase">ADMIN PANEL</h2>
-            <p className="text-neutral-400 font-mono">System administration and monitoring</p>
+            <p className="text-neutral-400 font-mono">Global monitoring & user management coming soon.</p>
           </div>
-          <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono uppercase">
-            SYSTEM SETTINGS
-          </Button>
+          <div className="flex gap-3">
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono uppercase px-6">
+              SYSTEM SETTINGS
+            </Button>
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono uppercase px-6">
+              GENERATE REPORT
+            </Button>
+          </div>
         </div>
 
-        {/* Stats Grid */}
+        {/* Tabs */}
+        
+
+        {/* Metrics Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((stat, index) => (
-            <div key={index} className="bg-neutral-900 border border-neutral-700 p-4 rounded">
+          {metrics.map((metric, index) => (
+            <div key={index} className="bg-neutral-900 border border-neutral-700 p-6 rounded">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-neutral-500 font-mono uppercase">{stat.label}</p>
-                  <p className={`text-2xl font-bold font-mono ${stat.color}`}>{stat.value}</p>
+                  <p className="text-xs text-neutral-500 font-mono uppercase mb-2">{metric.label}</p>
+                  <p className={`text-3xl font-bold font-mono ${metric.color}`}>{metric.value}</p>
                 </div>
-                <stat.icon className={`w-8 h-8 ${stat.color}`} />
+                <metric.icon className={`w-8 h-8 ${metric.color}`} />
               </div>
             </div>
           ))}
         </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500 w-4 h-4" />
-          <Input
-            placeholder="Search admin actions by type, user, details, or ID..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-neutral-900 border-neutral-700 text-white font-mono"
-          />
-        </div>
-
-        {/* Admin Actions Table */}
-        <div className="bg-neutral-900 border border-neutral-700 rounded">
-          <div className="p-4 border-b border-neutral-700">
-            <h3 className="text-lg font-bold text-white font-mono uppercase">RECENT ADMIN ACTIONS</h3>
-          </div>
-          <div className="overflow-x-auto">
-            <div className="space-y-2 p-4">
-              {filteredActions.map((action) => (
-                <div key={action.id} className="bg-neutral-800 border border-neutral-700 p-4 rounded">
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-white font-bold font-mono">{action.action}</h4>
-                        <span className="text-xs text-neutral-400 font-mono">{action.id}</span>
-                      </div>
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 text-sm">
-                        <div>
-                          <span className="text-neutral-500 font-mono">User:</span>
-                          <span className="text-white ml-2 font-mono">{action.user}</span>
-                        </div>
-                        <div>
-                          <span className="text-neutral-500 font-mono">Timestamp:</span>
-                          <span className="text-white ml-2 font-mono">{action.timestamp}</span>
-                        </div>
-                        <div>
-                          <span className="text-neutral-500 font-mono">Details:</span>
-                          <span className="text-white ml-2 font-mono">{action.details}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`px-3 py-1 rounded text-xs font-mono uppercase ${action.bgColor} ${action.statusColor}`}
-                      >
-                        {action.status}
-                      </div>
-                      <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-emerald-500">
-                        <Eye className="w-4 h-4" />
-                        <span className="sr-only">VIEW</span>
-                      </Button>
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Recent Activity */}
+          <div className="bg-neutral-900 border border-neutral-700 rounded p-6">
+            <h3 className="text-lg font-bold text-white font-mono uppercase mb-6">RECENT ACTIVITY</h3>
+            <div className="space-y-4">
+              {recentActivity.map((activity, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="w-1 h-16 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                  <div className="flex-1">
+                    <div className="text-xs text-neutral-500 font-mono mb-1">{activity.time}</div>
+                    <div className="text-white font-mono text-sm">
+                      {activity.action} <span className={activity.entityColor}>{activity.entity}</span>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* System Alerts */}
+          <div className="bg-neutral-900 border border-neutral-700 rounded p-6">
+            <h3 className="text-lg font-bold text-white font-mono uppercase mb-6">SYSTEM ALERTS</h3>
+            <div className="space-y-4">
+              {systemAlerts.map((alert, index) => (
+                <div key={index} className="bg-neutral-800 border border-neutral-700 p-4 rounded">
+                  <div className="flex items-center justify-between mb-2">
+                    <Badge className={`${alert.bgColor} text-white font-mono text-xs px-2 py-1`}>{alert.type}</Badge>
+                    <span className="text-xs text-neutral-500 font-mono">{alert.time}</span>
+                  </div>
+                  <p className="text-white font-mono text-sm">{alert.message}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="bg-neutral-900 border border-neutral-700 rounded p-6">
+          <h3 className="text-lg font-bold text-white font-mono uppercase mb-6">QUICK ACTIONS</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {quickActions.map((action, index) => (
+              <button
+                key={index}
+                className="bg-neutral-800 border border-neutral-700 hover:border-emerald-500 p-6 rounded transition-colors group"
+              >
+                <div className="flex flex-col items-center gap-3">
+                  <action.icon className="w-8 h-8 text-neutral-400 group-hover:text-emerald-400 transition-colors" />
+                  <span className="text-white font-mono text-sm uppercase">{action.title}</span>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       </div>

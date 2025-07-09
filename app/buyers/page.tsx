@@ -5,9 +5,12 @@ import { Search, Eye, Edit, Trash2, Users, TrendingUp, DollarSign, MapPin, Clock
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { UserDetailsModal } from "@/components/user-details-modal"
 
 export default function BuyersPage() {
   const [searchTerm, setSearchTerm] = useState("")
+  const [selectedUser, setSelectedUser] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const buyers = [
     {
@@ -20,6 +23,9 @@ export default function BuyersPage() {
       risk: "LOW RISK",
       purchases: "$2,450,000",
       lastActive: "2024-01-15",
+      phone: "+1-555-0123",
+      location: "New York, USA",
+      joined: "2023-08-15",
       statusColor: "text-emerald-500",
       statusBg: "bg-emerald-500/20",
       riskColor: "text-emerald-500",
@@ -35,6 +41,9 @@ export default function BuyersPage() {
       risk: "MEDIUM RISK",
       purchases: "$890,000",
       lastActive: "2024-01-14",
+      phone: "+1-555-0456",
+      location: "San Francisco, USA",
+      joined: "2023-11-22",
       statusColor: "text-orange-500",
       statusBg: "bg-orange-500/20",
       riskColor: "text-orange-500",
@@ -50,6 +59,9 @@ export default function BuyersPage() {
       risk: "LOW RISK",
       purchases: "$3,200,000",
       lastActive: "2024-01-16",
+      phone: "+1-555-0789",
+      location: "Austin, USA",
+      joined: "2023-05-10",
       statusColor: "text-emerald-500",
       statusBg: "bg-emerald-500/20",
       riskColor: "text-emerald-500",
@@ -89,6 +101,16 @@ export default function BuyersPage() {
       buyer.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
       buyer.id.toLowerCase().includes(searchTerm.toLowerCase()),
   )
+
+  const handleUserClick = (buyer: any) => {
+    setSelectedUser(buyer)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedUser(null)
+  }
 
   return (
     <div className="w-full bg-black min-h-full">
@@ -135,7 +157,11 @@ export default function BuyersPage() {
           </div>
           <div className="p-4 space-y-4">
             {filteredBuyers.map((buyer) => (
-              <div key={buyer.id} className="bg-neutral-800 border border-neutral-700 p-4 rounded">
+              <div
+                key={buyer.id}
+                className="bg-neutral-800 border border-neutral-700 p-4 rounded cursor-pointer hover:bg-neutral-750 transition-colors"
+                onClick={() => handleUserClick(buyer)}
+              >
                 <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-start justify-between mb-3">
@@ -175,6 +201,10 @@ export default function BuyersPage() {
                       variant="outline"
                       size="sm"
                       className="border-neutral-600 text-neutral-400 hover:text-white hover:border-neutral-500 bg-transparent font-mono"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleUserClick(buyer)
+                      }}
                     >
                       <Eye className="w-4 h-4 mr-1" />
                       VIEW
@@ -183,6 +213,7 @@ export default function BuyersPage() {
                       variant="outline"
                       size="sm"
                       className="border-neutral-600 text-neutral-400 hover:text-white hover:border-neutral-500 bg-transparent font-mono"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <Edit className="w-4 h-4 mr-1" />
                       EDIT
@@ -191,6 +222,7 @@ export default function BuyersPage() {
                       variant="outline"
                       size="sm"
                       className="border-red-600 text-red-500 hover:text-white hover:bg-red-600 bg-transparent font-mono"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <Trash2 className="w-4 h-4 mr-1" />
                       DELETE
@@ -223,6 +255,9 @@ export default function BuyersPage() {
           </div>
         </div>
       </div>
+
+      {/* User Details Modal */}
+      <UserDetailsModal user={selectedUser} isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   )
 }

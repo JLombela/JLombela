@@ -1,55 +1,74 @@
 "use client"
 
-import { UserProfileDropdown } from "./user-profile-dropdown"
-import { Bell, Search, Command } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { usePathname } from "next/navigation"
+import { Search, Menu } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { UserProfileDropdown } from "@/components/user-profile-dropdown"
+import { NotificationsDropdown } from "@/components/notifications-dropdown"
+import { AppSidebar } from "./app-sidebar"
+
+const getPageTitle = (pathname: string) => {
+  if (pathname === "/dashboard") return "Dashboard"
+  if (pathname.startsWith("/deals")) return "Deals"
+  if (pathname.startsWith("/documents")) return "Documents"
+  if (pathname.startsWith("/buyers")) return "Buyers"
+  if (pathname.startsWith("/sellers")) return "Sellers"
+  if (pathname.startsWith("/brokers")) return "Brokers"
+  if (pathname.startsWith("/kyc-kyb")) return "KYC/KYB"
+  if (pathname.startsWith("/commissions")) return "Commissions"
+  if (pathname.startsWith("/admin")) return "Admin Panel"
+  if (pathname.startsWith("/systems")) {
+    if (pathname.endsWith("/user-roles")) return "User Roles"
+    if (pathname.endsWith("/operations")) return "Operations"
+    if (pathname.endsWith("/agent-network")) return "Agent Network"
+    if (pathname.endsWith("/command-center")) return "Command Center"
+    return "Systems"
+  }
+  return "Axalio"
+}
 
 export function DashboardHeader() {
+  const pathname = usePathname()
+  const title = getPageTitle(pathname)
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-neutral-800 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
-      <div className="flex h-16 items-center justify-between px-6">
-        {/* Left side - Logo and Title */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Command className="h-6 w-6 text-emerald-400" />
-            <span className="font-mono text-lg font-bold text-white tracking-wider">AXALIO</span>
-          </div>
-          <div className="h-6 w-px bg-neutral-700" />
-          <span className="font-mono text-sm text-neutral-400 tracking-wider">COMMAND CENTER</span>
+    <header className="sticky top-0 z-30 flex h-[65px] items-center gap-4 border-b border-neutral-800 bg-neutral-950/50 px-4 backdrop-blur-sm md:px-6">
+      {/* Mobile Navigation */}
+      <div className="md:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="shrink-0 border-neutral-700 bg-transparent hover:bg-neutral-800"
+            >
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="flex flex-col p-0 w-full bg-neutral-900 border-r-0">
+            <AppSidebar />
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      <div className="flex-1">
+        <h1 className="font-semibold text-lg text-neutral-200 px-2 uppercase">{title}</h1>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <div className="relative hidden md:block">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-neutral-500" />
+          <Input
+            type="search"
+            placeholder="Search..."
+            className="w-full rounded-lg bg-neutral-800/80 pl-8 md:w-[200px] lg:w-[300px] border-neutral-700 focus:border-axalio-green"
+          />
         </div>
-
-        {/* Center - Search */}
-        <div className="flex-1 max-w-md mx-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
-            <Input
-              placeholder="Search deals, users, documents..."
-              className="pl-10 bg-neutral-900 border-neutral-700 text-white placeholder:text-neutral-500 font-mono text-sm"
-            />
-          </div>
-        </div>
-
-        {/* Right side - Notifications and User Profile */}
-        <div className="flex items-center gap-4">
-          {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative hover:bg-neutral-800 border border-neutral-700">
-            <Bell className="h-4 w-4 text-neutral-400" />
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-emerald-600 text-white text-xs p-0 flex items-center justify-center">
-              3
-            </Badge>
-          </Button>
-
-          {/* System Status */}
-          <div className="flex items-center gap-2 px-3 py-1 bg-neutral-900 border border-neutral-700 rounded">
-            <div className="h-2 w-2 bg-emerald-400 rounded-full animate-pulse" />
-            <span className="font-mono text-xs text-emerald-400">SYSTEM ONLINE</span>
-          </div>
-
-          {/* User Profile Dropdown */}
-          <UserProfileDropdown />
-        </div>
+        <NotificationsDropdown />
+        <UserProfileDropdown />
       </div>
     </header>
   )

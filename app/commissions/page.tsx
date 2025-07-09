@@ -5,11 +5,12 @@ import { Search, Eye, DollarSign, TrendingUp, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 export default function CommissionsPage() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [hoveredCommission, setHoveredCommission] = useState(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [selectedCommission, setSelectedCommission] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const commissions = [
     {
@@ -84,17 +85,15 @@ export default function CommissionsPage() {
       commission.id.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  const handleMouseEnter = (commission, event) => {
-    setHoveredCommission(commission)
-    setMousePosition({ x: event.clientX, y: event.clientY })
+  const handleRowClick = (commission) => {
+    setSelectedCommission(commission)
+    setIsModalOpen(true)
   }
 
-  const handleMouseMove = (event) => {
-    setMousePosition({ x: event.clientX, y: event.clientY })
-  }
-
-  const handleMouseLeave = () => {
-    setHoveredCommission(null)
+  const handleEyeClick = (commission, event) => {
+    event.stopPropagation()
+    setSelectedCommission(commission)
+    setIsModalOpen(true)
   }
 
   const getStatusBadge = (status) => {
@@ -196,9 +195,7 @@ export default function CommissionsPage() {
                   <tr
                     key={commission.id}
                     className="border-b border-neutral-800 hover:bg-neutral-800 transition-colors cursor-pointer"
-                    onMouseEnter={(e) => handleMouseEnter(commission, e)}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={handleMouseLeave}
+                    onClick={() => handleRowClick(commission)}
                   >
                     <td className="py-4 px-4 text-sm text-white font-mono">{commission.id}</td>
                     <td className="py-4 px-4 text-sm text-emerald-500 font-mono">{commission.dealId}</td>
@@ -209,7 +206,12 @@ export default function CommissionsPage() {
                     <td className="py-4 px-4">{getStatusBadge(commission.status)}</td>
                     <td className="py-4 px-4 text-sm text-white font-mono">{commission.dueDate}</td>
                     <td className="py-4 px-4">
-                      <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-emerald-500">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-neutral-400 hover:text-emerald-500"
+                        onClick={(e) => handleEyeClick(commission, e)}
+                      >
                         <Eye className="w-4 h-4" />
                       </Button>
                     </td>
@@ -220,104 +222,99 @@ export default function CommissionsPage() {
           </div>
         </div>
 
-        {/* Hover Modal */}
-        {hoveredCommission && (
-          <div
-            className="fixed z-50 bg-neutral-900 border border-neutral-700 rounded-lg p-6 shadow-2xl pointer-events-none"
-            style={{
-              left: mousePosition.x + 20,
-              top: mousePosition.y - 200,
-              width: "500px",
-            }}
-          >
-            {/* Modal Header */}
-            <div className="mb-4">
-              <h3 className="text-lg font-bold text-white font-mono">{hoveredCommission.id}</h3>
-              <p className="text-sm text-neutral-400 font-mono">Commission for {hoveredCommission.dealId}</p>
-            </div>
+        {/* Commission Details Modal */}
+        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <DialogContent className="max-w-4xl bg-neutral-900 border-neutral-700 text-white">
+            {selectedCommission && (
+              <>
+                <DialogHeader>
+                  <DialogTitle className="text-xl font-bold text-white font-mono">{selectedCommission.id}</DialogTitle>
+                  <p className="text-sm text-neutral-400 font-mono">Commission for {selectedCommission.dealId}</p>
+                </DialogHeader>
 
-            {/* Modal Content */}
-            <div className="grid grid-cols-2 gap-6">
-              {/* Left Column */}
-              <div className="space-y-4">
-                <div>
-                  <h4 className="text-sm font-medium text-neutral-300 tracking-wider mb-2 font-mono">
-                    COMMISSION STATUS
-                  </h4>
-                  {getStatusBadge(hoveredCommission.status)}
+                <div className="grid grid-cols-2 gap-6 mt-6">
+                  {/* Left Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="text-sm font-medium text-neutral-300 tracking-wider mb-2 font-mono">
+                        COMMISSION STATUS
+                      </h4>
+                      {getStatusBadge(selectedCommission.status)}
+                    </div>
+
+                    <div>
+                      <h4 className="text-sm font-medium text-neutral-300 tracking-wider mb-2 font-mono">
+                        DEAL INFORMATION
+                      </h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-neutral-400 font-mono">Deal ID:</span>
+                          <span className="text-emerald-500 font-mono">{selectedCommission.dealId}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-neutral-400 font-mono">Deal Value:</span>
+                          <span className="text-white font-mono">{selectedCommission.dealValue}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-neutral-400 font-mono">Deal Status:</span>
+                          <span className="text-white font-mono">{selectedCommission.dealStatus}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-neutral-400 font-mono">Broker:</span>
+                          <span className="text-white">{selectedCommission.broker}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column */}
+                  <div>
+                    <h4 className="text-sm font-medium text-neutral-300 tracking-wider mb-2 font-mono">
+                      COMMISSION DETAILS
+                    </h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-neutral-400 font-mono">Commission Rate:</span>
+                        <span className="text-white font-mono">{selectedCommission.rate}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-neutral-400 font-mono">Commission Amount:</span>
+                        <span className="text-white font-mono">{selectedCommission.commission}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-neutral-400 font-mono">Created:</span>
+                        <span className="text-white font-mono">{selectedCommission.created}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-neutral-400 font-mono">Due Date:</span>
+                        <span className="text-white font-mono">{selectedCommission.dueDate}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <h4 className="text-sm font-medium text-neutral-300 tracking-wider mb-2 font-mono">
-                    DEAL INFORMATION
-                  </h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-neutral-400 font-mono">Deal ID:</span>
-                      <span className="text-emerald-500 font-mono">{hoveredCommission.dealId}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-neutral-400 font-mono">Deal Value:</span>
-                      <span className="text-white font-mono">{hoveredCommission.dealValue}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-neutral-400 font-mono">Deal Status:</span>
-                      <span className="text-white font-mono">{hoveredCommission.dealStatus}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-neutral-400 font-mono">Broker:</span>
-                      <span className="text-white">{hoveredCommission.broker}</span>
-                    </div>
-                  </div>
+                {/* Action Buttons */}
+                <div className="flex gap-3 mt-6 pt-4 border-t border-neutral-700">
+                  <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono tracking-wider text-xs">
+                    PROCESS PAYMENT
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="border-neutral-600 text-neutral-400 hover:text-white hover:border-neutral-500 bg-transparent font-mono tracking-wider text-xs"
+                  >
+                    VIEW DEAL
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="border-neutral-600 text-neutral-400 hover:text-white hover:border-neutral-500 bg-transparent font-mono tracking-wider text-xs"
+                  >
+                    DOWNLOAD INVOICE
+                  </Button>
                 </div>
-              </div>
-
-              {/* Right Column */}
-              <div>
-                <h4 className="text-sm font-medium text-neutral-300 tracking-wider mb-2 font-mono">
-                  COMMISSION DETAILS
-                </h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Commission Rate:</span>
-                    <span className="text-white font-mono">{hoveredCommission.rate}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Commission Amount:</span>
-                    <span className="text-white font-mono">{hoveredCommission.commission}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Created:</span>
-                    <span className="text-white font-mono">{hoveredCommission.created}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-neutral-400 font-mono">Due Date:</span>
-                    <span className="text-white font-mono">{hoveredCommission.dueDate}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-3 mt-6 pt-4 border-t border-neutral-700">
-              <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-mono tracking-wider text-xs">
-                PROCESS PAYMENT
-              </Button>
-              <Button
-                variant="outline"
-                className="border-neutral-600 text-neutral-400 hover:text-white hover:border-neutral-500 bg-transparent font-mono tracking-wider text-xs"
-              >
-                VIEW DEAL
-              </Button>
-              <Button
-                variant="outline"
-                className="border-neutral-600 text-neutral-400 hover:text-white hover:border-neutral-500 bg-transparent font-mono tracking-wider text-xs"
-              >
-                DOWNLOAD INVOICE
-              </Button>
-            </div>
-          </div>
-        )}
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   )
