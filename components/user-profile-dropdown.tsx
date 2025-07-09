@@ -116,7 +116,7 @@ export function UserProfileDropdown() {
             <DropdownMenuSubTrigger className="py-2.5 px-4 cursor-pointer">
               <Palette className="mr-3 h-4 w-4" />
               <span>Theme Settings</span>
-              <ChevronRight className="ml-auto h-4 w-4" />
+              
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent sideOffset={8} alignOffset={-5}>

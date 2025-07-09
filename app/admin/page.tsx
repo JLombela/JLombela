@@ -1,15 +1,9 @@
 "use client"
-
-import { useState } from "react"
+import Link from "next/link"
 import { Users, FileText, DollarSign, TrendingUp, Settings, Database } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
 export default function AdminPage() {
-  const [activeTab, setActiveTab] = useState("Overview")
-
-  const tabs = ["Overview", "Users", "System", "Reports"]
-
   const metrics = [
     {
       label: "TOTAL USERS",
@@ -101,39 +95,29 @@ export default function AdminPage() {
     {
       title: "MANAGE USERS",
       icon: Users,
-    },
-    {
-      title: "REVIEW KYC",
-      icon: FileText,
+      href: "/admin/users",
     },
     {
       title: "SYSTEM CONFIG",
       icon: Settings,
+      href: "/admin/system-config",
+    },
+    {
+      title: "REVIEW KYC",
+      icon: FileText,
+      href: "/kyc-kyb",
     },
     {
       title: "DATABASE",
       icon: Database,
+      href: "#", // Placeholder
     },
   ]
 
   return (
     <div className="w-full">
       <div className="space-y-6 w-full">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h2 className="text-2xl font-bold tracking-wider font-mono text-foreground uppercase">ADMIN PANEL</h2>
-            <p className="text-muted-foreground font-mono">Global monitoring & user management coming soon.</p>
-          </div>
-          <div className="flex gap-3">
-            <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black font-mono uppercase px-6">
-              SYSTEM SETTINGS
-            </Button>
-            <Button className="bg-axalio-green hover:bg-axalio-green/90 text-black font-mono uppercase px-6">
-              GENERATE REPORT
-            </Button>
-          </div>
-        </div>
+        {/* Header is handled by layout */}
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -192,15 +176,14 @@ export default function AdminPage() {
           <h3 className="text-lg font-bold text-foreground font-mono uppercase mb-6">QUICK ACTIONS</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {quickActions.map((action, index) => (
-              <button
-                key={index}
-                className="bg-muted border border-border hover:border-axalio-green p-6 rounded transition-colors group"
-              >
-                <div className="flex flex-col items-center gap-3">
-                  <action.icon className="w-8 h-8 text-muted-foreground group-hover:text-axalio-green transition-colors" />
-                  <span className="text-foreground font-mono text-sm uppercase">{action.title}</span>
+              <Link href={action.href} key={index}>
+                <div className="bg-muted border border-border hover:border-axalio-green p-6 rounded transition-colors group h-full flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center gap-3">
+                    <action.icon className="w-8 h-8 text-muted-foreground group-hover:text-axalio-green transition-colors" />
+                    <span className="text-foreground font-mono text-sm uppercase text-center">{action.title}</span>
+                  </div>
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
         </div>

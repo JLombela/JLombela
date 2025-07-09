@@ -60,7 +60,7 @@ All under Axalio's facilitation as the principal in transactions.
 - User and organization profile editing
 - Reporting: user activity, deals by status, commission summary
 
-## 🏗️ Architecture & Folder Structure
+## 🏗��� Architecture & Folder Structure
 
 \`\`\`
 axalio-mvp/

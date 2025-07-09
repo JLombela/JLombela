@@ -20,6 +20,7 @@ import {
   UserCog,
   Bot,
   GitBranch,
+  FileSignature,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -46,6 +47,7 @@ const navSections = [
     items: [
       { href: "/kyc-kyb", label: "KYC/KYB", icon: ShieldCheck },
       { href: "/commissions", label: "Commissions", icon: HandCoins },
+      { href: "/contracts", label: "Contracts", icon: FileSignature },
       { href: "/admin", label: "Admin Panel", icon: Settings },
     ],
   },
