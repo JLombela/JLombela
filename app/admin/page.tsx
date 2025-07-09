@@ -15,25 +15,25 @@ export default function AdminPage() {
       label: "TOTAL USERS",
       value: "1,247",
       icon: Users,
-      color: "text-emerald-400",
+      color: "text-axalio-green",
     },
     {
       label: "ACTIVE DEALS",
       value: "47",
       icon: FileText,
-      color: "text-emerald-400",
+      color: "text-axalio-green",
     },
     {
       label: "TOTAL VOLUME",
       value: "$2.4M",
       icon: DollarSign,
-      color: "text-emerald-400",
+      color: "text-axalio-green",
     },
     {
       label: "SYSTEM UPTIME",
       value: "99.9%",
       icon: TrendingUp,
-      color: "text-emerald-400",
+      color: "text-axalio-green",
     },
   ]
 
@@ -42,31 +42,31 @@ export default function AdminPage() {
       time: "2 min ago",
       action: "New user registration",
       entity: "Golden Mining Co.",
-      entityColor: "text-emerald-400",
+      entityColor: "text-axalio-green",
     },
     {
       time: "5 min ago",
       action: "Deal status updated",
       entity: "DEAL-2025-047",
-      entityColor: "text-emerald-400",
+      entityColor: "text-axalio-green",
     },
     {
       time: "12 min ago",
       action: "Document uploaded",
       entity: "Swiss Refinery AG",
-      entityColor: "text-emerald-400",
+      entityColor: "text-axalio-green",
     },
     {
       time: "18 min ago",
       action: "KYC approved",
       entity: "Mining Brokers Ltd",
-      entityColor: "text-emerald-400",
+      entityColor: "text-axalio-green",
     },
     {
       time: "25 min ago",
       action: "Commission processed",
       entity: "COM-2025-001",
-      entityColor: "text-emerald-400",
+      entityColor: "text-axalio-green",
     },
   ]
 
@@ -93,7 +93,7 @@ export default function AdminPage() {
       time: "6 hours ago",
       type: "SUCCESS",
       message: "Backup completed successfully",
-      bgColor: "bg-emerald-600",
+      bgColor: "bg-axalio-green",
     },
   ]
 
@@ -158,7 +158,7 @@ export default function AdminPage() {
             <div className="space-y-4">
               {recentActivity.map((activity, index) => (
                 <div key={index} className="flex items-start gap-4">
-                  <div className="w-1 h-16 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                  <div className="w-1 h-16 bg-axalio-green rounded-full flex-shrink-0"></div>
                   <div className="flex-1">
                     <div className="text-xs text-muted-foreground font-mono mb-1">{activity.time}</div>
                     <div className="text-foreground font-mono text-sm">

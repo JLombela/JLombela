@@ -23,8 +23,8 @@ export default function DocumentsPage() {
       expires: "2025-12-15",
       size: "2.4 MB",
       tags: ["mining", "license", "compliance"],
-      statusColor: "text-emerald-500",
-      bgColor: "bg-emerald-500/10",
+      statusColor: "text-axalio-green",
+      bgColor: "bg-axalio-green/10",
     },
     {
       id: "DOC-2025-002",
@@ -75,7 +75,7 @@ export default function DocumentsPage() {
   ]
 
   const stats = [
-    { label: "TOTAL DOCUMENTS", value: "1,247", icon: FileText, color: "text-emerald-500" },
+    { label: "TOTAL DOCUMENTS", value: "1,247", icon: FileText, color: "text-axalio-green" },
     { label: "EXPIRING SOON", value: "23", icon: Clock, color: "text-yellow-500" },
     { label: "EXPIRED", value: "8", icon: AlertTriangle, color: "text-red-500" },
     { label: "PENDING REVIEW", value: "12", icon: Shield, color: "text-blue-500" },
