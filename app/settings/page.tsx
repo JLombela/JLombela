@@ -4,13 +4,13 @@ import { ProfileForm } from "./profile-form"
 import { SecurityForm } from "./security-form"
 import { KycStatus } from "./kyc-status"
 import { PreferencesForm } from "./preferences-form"
-import { User, Shield, FileText, Settings } from "lucide-react"
+import { User, Shield, FileText, SettingsIcon } from "lucide-react"
 
 export default function SettingsPage() {
   return (
     <div className="space-y-6 font-mono">
       <div>
-        <h1 className="text-3xl font-bold tracking-tighter uppercase">User Profile Settings</h1>
+        <h1 className="text-2xl font-bold tracking-tighter uppercase">User Profile Settings</h1>
         <p className="text-muted-foreground">Manage your account settings, profile, and preferences.</p>
       </div>
       <Tabs defaultValue="profile" className="w-full">
@@ -25,7 +25,7 @@ export default function SettingsPage() {
             <FileText className="mr-2 h-4 w-4" /> KYC/AML
           </TabsTrigger>
           <TabsTrigger value="preferences" className="py-2.5">
-            <Settings className="mr-2 h-4 w-4" /> Preferences
+            <SettingsIcon className="mr-2 h-4 w-4" /> Preferences
           </TabsTrigger>
         </TabsList>
         <TabsContent value="profile" className="mt-6">

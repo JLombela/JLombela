@@ -1,15 +1,15 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { UserProfileDropdown } from "./user-profile-dropdown"
-import { Menu } from "lucide-react"
-import { Button } from "./ui/button"
+import { Menu, Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { UserProfileDropdown } from "@/components/user-profile-dropdown"
+import { NotificationsDropdown } from "@/components/notifications-dropdown"
+import { AppSidebar } from "./app-sidebar"
 
-type AppHeaderProps = {
-  onMenuClick: () => void
-}
-
-export function DashboardHeader({ onMenuClick }: AppHeaderProps) {
+export function DashboardHeader() {
   const pathname = usePathname()
 
   const getPageTitle = (path: string) => {
@@ -40,21 +40,36 @@ export function DashboardHeader({ onMenuClick }: AppHeaderProps) {
   }
 
   const pageTitle = getPageTitle(pathname)
-  const pageDescription = "Real-time tactical overview of global operations"
 
   return (
-    <header className="flex h-16 items-center justify-between bg-card px-4 md:px-6 border-b border-border sticky top-0 z-30">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="lg:hidden" onClick={onMenuClick}>
-          <Menu className="h-6 w-6" />
-          <span className="sr-only">Toggle Menu</span>
-        </Button>
-        <div>
-          <h1 className="text-lg font-bold tracking-wider font-mono text-foreground uppercase">{pageTitle}</h1>
-          <p className="text-xs text-muted-foreground font-mono hidden md:block">{pageDescription}</p>
-        </div>
+    <header className="sticky top-0 z-30 flex h-[65px] items-center gap-4 border-b border-border bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:px-6">
+      <div className="flex items-center gap-2">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon" className="shrink-0 lg:hidden bg-transparent">
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="flex flex-col p-0 w-64 border-r-0">
+            <AppSidebar />
+          </SheetContent>
+        </Sheet>
+        <h1 className="text-lg font-semibold uppercase tracking-wider text-foreground font-mono hidden md:block">
+          {pageTitle}
+        </h1>
       </div>
-      <div className="flex items-center gap-4">
+
+      <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
+        <div className="relative ml-auto flex-1 md:grow-0">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search..."
+            className="w-full rounded-lg bg-muted pl-8 md:w-[200px] lg:w-[336px]"
+          />
+        </div>
+        <NotificationsDropdown />
         <UserProfileDropdown />
       </div>
     </header>
